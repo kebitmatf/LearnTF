@@ -169,7 +169,7 @@ def optimize(num_iterations):
         feed_dict_train = {x:x_batch, y_true: y_true_batch}
         session.run(optimizer, feed_dict = feed_dict_train)
         
-        if i % 10 == 0:
+        if i % 100 == 0:
             acc = session.run(accuracy, feed_dict = feed_dict_train)
             msg = "Optimization Iteration: {0:>6}, Trainning Accuracy: {1:>6.1%}"
             print(msg.format(i+1, acc))
@@ -204,7 +204,7 @@ def plot_confusion_matrix(cls_pred):
     
     plt.show()
 
-test_batch_size = 256
+test_batch_size = 64
 def print_test_accuracy(show_example_errors = False,
                         show_confusion_matrix = False):
     num_test = len(data.test.images)
@@ -246,6 +246,6 @@ print_test_accuracy()
 optimize(num_iterations = 99) # 100 iteration trainning: 99 + 1 in previous train
 print_test_accuracy(show_example_errors = True) 
 
-#optimize(num_iterations = 900) # 100 iteration trainning: 900 + 100 in previous train
-#print_test_accuracy(show_example_errors = True,
-#                    show_confusion_matrix = True) 
+optimize(num_iterations = 900) # 100 iteration trainning: 900 + 100 in previous train
+print_test_accuracy(show_example_errors = True,
+                    show_confusion_matrix = True) 

@@ -18,6 +18,12 @@ import numpy as np
 import time
 from datetime import timedelta
 
+# Config using gpu or cpu.
+# Using cpu -> set 'GPU': 0. Using gpu -> set 'cpu': 0 or 'gpu': 0
+# Note: inversed & Upper Case. Don't known why. maybe mistake
+#config = tf.ConfigProto(device_count = {'GPU': 0}) # Using CPU
+config = tf.ConfigProto(device_count = {'gpu': 0}) # Using GPU = default
+
 # Load and save MNIST data-set
 from tensorflow.examples.tutorials.mnist import input_data
 data = input_data.read_data_sets('data/MNIST',one_hot = True)
@@ -104,8 +110,12 @@ optimizer = tf.train.AdamOptimizer(learning_rate = 1e-4).minimize(cost)
 correct_predictions = tf.equal(y_pred_cls, y_true_cls)
 accuracy = tf.reduce_mean(tf.cast(correct_predictions, dtype = tf.float32))
 
+#with tf.device('/gpu:0'):
+#sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 # Start a TF session and running
-session = tf.Session()
+
+session = tf.Session(config=config)
+#session = tf.Session()
 session.run(tf.global_variables_initializer())
 
 batch_size = 64
